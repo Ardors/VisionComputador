@@ -24,31 +24,26 @@ title('Canal G');
 subplot(1,3,3), imshow(b);
 title('Canal B');
 
-%% Obtención de Drg y Drb
+%% Obtención de Drg
+% Drg es la diferencia entre r y g dividida de la iluminación total
 
-r0 = cast(r,"single")./(cast(r,"single")+cast(g,"single")+cast(b,"single"));
-g0 = cast(g,"single")./(cast(r,"single")+cast(g,"single")+cast(b,"single"));
-b0 = cast(b,"single")./(cast(r,"single")+cast(g,"single")+cast(b,"single"));
-
-Drg = r0-g0;
-Drb = r0-b0;
-
-alpha = 0.15;
-beta = 0.25;
+Drg = uint8(uint16(r-g)*256./uint16(r+g+b));
+Drb = uint8(uint16(r-b)*256./uint16(r+g+b));
 
 figure(3)
-scatter(Drb,Drg);
+scatter(drb,drg);
 title('Distribución de píxeles en Drb/Drg');
-xlabel('Drb') 
+xlabel('Drb')
 ylabel('Drg')
 
 %% Umbral propio con floats
-Drg_bin = imbinarize(Drg,alpha);
+Drg_bin = imbinarize(Drg,100/256);
 
 figure (4)
-subplot(1,3,1), imshow(reducida);
-subplot(1,3,2), imagesc(Drg_bin);
-subplot(1,3,3), imshow(Drg);
+subplot(1,4,1), imshow(reducida);
+subplot(1,4,2), imagesc(Drg_bin);
+subplot(1,4,3), imshow(Drg);
+subplot(1,4,4), histogram(Drg);
 
 %% Opening and closing
 % La máscara disco da resultados muy cuadrados. El diamante da
@@ -81,26 +76,26 @@ title('Disco 3');
 
 %% Bordes 
 
-% gris2 = rgb2gray(reducida);
-% BW2=edge(gris2,'canny'); 
-% 
-% reducida5 = imresize(r,0.2);
-% gris5 = rgb2gray(reducida5);
-% BW5=edge(gris5,'canny'); 
-% 
-% figure(6);
-% subplot(1,3,1), imshow(gris);
-% subplot(1,3,2), imshow(BW2);
-% title('Reducida 0.5');
-% subplot(1,3,3), imshow(BW5);
-% title('Reducida 0.2');
+gris2 = rgb2gray(reducida);
+BW2=edge(gris2,'canny'); 
+
+reducida5 = imresize(r,0.2);
+gris5 = rgb2gray(reducida5);
+BW5=edge(gris5,'canny'); 
+
+figure(6);
+subplot(1,3,1), imshow(gris);
+subplot(1,3,2), imshow(BW2);
+title('Reducida 0.5');
+subplot(1,3,3), imshow(BW5);
+title('Reducida 0.2');
 
 %% Aplicar mascara
 % Aplico sobre la imagen original la mascara
 
 limpiaX3 = cat(3, limpia, limpia, limpia);
 Inew = r.*int8(limpia);
-%Inew = reducida.*repmat(r,[1,1,3]);
+Inew = reducida.*repmat(r,[1,1,3]);
 
 
 figure(7);
