@@ -8,11 +8,11 @@ original = imread('../test_data/detection/images/dataset1_back_631.png');
 
 reducida = imresize(original,0.5);
 
-figure(1)
-subplot(1,2,1), imshow(original);
-title('Original');
-subplot(1,2,2), imshow(reducida);
-title('Reducida 0.5');
+% figure(1)
+% subplot(1,2,1), imshow(original);
+% title('Original');
+% subplot(1,2,2), imshow(reducida);
+% title('Reducida 0.5');
 
 %% Obtención de RGB
 % Se observa en los resultados como ninguno de los canales por separado
@@ -22,13 +22,13 @@ r = reducida(:,:,1);
 g = reducida(:,:,2);
 b = reducida(:,:,3);
 
-figure(2)
-subplot(1,3,1), imshow(r);
-title('Canal R');
-subplot(1,3,2), imshow(g);
-title('Canal G');
-subplot(1,3,3), imshow(b);
-title('Canal B');
+% figure(2)
+% subplot(1,3,1), imshow(r);
+% title('Canal R');
+% subplot(1,3,2), imshow(g);
+% title('Canal G');
+% subplot(1,3,3), imshow(b);
+% title('Canal B');
 
 %% Obtención de Drg y Drb
 
@@ -42,19 +42,20 @@ Drb = r0-b0;
 alpha = 0.15;
 beta = 0.25;
 
-figure(3)
-scatter(Drb,Drg);
-title('Distribución de píxeles en Drb/Drg');
-xlabel('Drb') 
-ylabel('Drg')
+% figure(3)
+% scatter(Drb,Drg);
+% title('Distribución de píxeles en Drb/Drg');
+% xlabel('Drb') 
+% ylabel('Drg')
 
 %% Umbral propio con floats
 Drg_bin = imbinarize(Drg,alpha);
-
-figure (4)
-subplot(1,3,1), imshow(reducida);
-subplot(1,3,2), imagesc(Drg_bin);
-subplot(1,3,3), imshow(Drg);
+% Drg_bin = imbinarize(Drg,'adaptive','ForegroundPolarity','dark','Sensitivity',0);
+% Drg_bin = adaptthresh(Drg,0.9,'ForegroundPolarity','bright');
+% figure (4)
+% subplot(1,3,1), imshow(reducida);
+% subplot(1,3,2), imagesc(Drg_bin);
+% subplot(1,3,3), imshow(Drg);
 
 %% Opening and closing
 % La máscara disco da resultados muy cuadrados. El diamante da
@@ -85,7 +86,26 @@ limpia3 = imclose(limpia3,se);
 % subplot(1,5,5), imagesc(limpia3);
 % title('Disco 3');
 
+%% Aplicar mascara
+% Aplico sobre la imagen original la mascara
+
+limpiaX3 = cat(3, limpia, limpia, limpia);
+% Inew = r.*uint8(limpia);
+% Inew = reducida.*uint8(limpiaX3);
+Inew = uint8(limpia) .* r;
+
+
+% figure(7);
+% subplot(1,3,1), imshow(reducida);
+% subplot(1,3,2), imshow(limpia);
+% subplot(1,3,3), imshow(Inew);
+
 %% Bordes 
+
+imagen_a_bordear = Inew;
+
+BW2=edge(Inew, 'Canny'); 
+% BW2=edge(Inew, 'Sobel', 0.05);
 
 % gris2 = rgb2gray(reducida);
 % BW2=edge(gris2,'canny'); 
@@ -94,33 +114,19 @@ limpia3 = imclose(limpia3,se);
 % gris5 = rgb2gray(reducida5);
 % BW5=edge(gris5,'canny'); 
 % 
-% figure(6);
-% subplot(1,3,1), imshow(gris);
-% subplot(1,3,2), imshow(BW2);
-% title('Reducida 0.5');
-% subplot(1,3,3), imshow(BW5);
-% title('Reducida 0.2');
+figure(6);
+subplot(1,3,1), imshow(imagen_a_bordear);
+subplot(1,3,2), imshow(BW2);
+subplot(1,3,3), imshow(reducida);
 
-%% Aplicar mascara
-% Aplico sobre la imagen original la mascara
-
-limpiaX3 = cat(3, limpia, limpia, limpia);
-Inew = r.*uint8(limpia);
-%Inew = reducida.*repmat(r,[1,1,3]);
-
-
-% figure(7);
-% subplot(1,3,1), imshow(reducida);
-% subplot(1,3,2), imshow(limpia);
-% subplot(1,3,3), imshow(Inew);
 
 %% Características
-caract = regionprops(limpia, 'all');
-
-figure(8)
-imshow(original);
-
-for i = 1:length(caract)
-    rectangle('Position', caract(i).BoundingBox*2, 'LineWidth', 2, 'EdgeColor', 'r')
-end
+% caract = regionprops(limpia, 'all');
+% 
+% figure(8)
+% imshow(original);
+% 
+% for i = 1:length(caract)
+%     rectangle('Position', caract(i).BoundingBox*2, 'LineWidth', 2, 'EdgeColor', 'r')
+% end
 
