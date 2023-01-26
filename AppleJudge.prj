@@ -1,6 +1,6 @@
 <deployment-project plugin="plugin.apptool" plugin-version="1.0">
-  <configuration build-checksum="3515187449" file="C:\Users\pablo\OneDrive - Universidad Politécnica de Madrid\Documentos UPM\MUAR\Semestre 1b\Visión por Computador\Trabajo\VisionComputador\Apple Judge.prj" location="C:\Users\pablo\OneDrive - Universidad Politécnica de Madrid\Documentos UPM\MUAR\Semestre 1b\Visión por Computador\Trabajo\VisionComputador" name="Apple Judge" target="target.mlapps" target-name="Package App">
-    <param.appname>Apple Judge</param.appname>
+  <configuration build-checksum="1438581603" file="C:\Users\pablo\Desktop\ETSII\Vision\VisionComputador\AppleJudge.prj" location="C:\Users\pablo\Desktop\ETSII\Vision\VisionComputador" name="AppleJudge" target="target.mlapps" target-name="Package App">
+    <param.appname>AppleJudge</param.appname>
     <param.authnamewatermark>Pablo García Peris</param.authnamewatermark>
     <param.email />
     <param.company />
@@ -14,7 +14,7 @@ Pablo García
 Ruth Castañeda
 Pablo Daniel Martín
 Dylan Quintero</param.description>
-    <param.screenshot>C:\Users\pablo\AppData\Local\Temp\tpb7b0417f_2048_4528_8343_15b23a3cb274.png</param.screenshot>
+    <param.screenshot>C:\Users\pablo\AppData\Local\Temp\tpe0e68617_d81a_4897_a6ed_147e26cac935.png</param.screenshot>
     <param.version>1.0</param.version>
     <param.products.name />
     <param.products.id />
@@ -38,42 +38,17 @@ Dylan Quintero</param.description>
       <file>${PROJECT_ROOT}\AppleJudge.mlapp</file>
     </fileset.main>
     <fileset.depfun>
-      <file>${PROJECT_ROOT}\AJ_Logo.png</file>
+      <file>${PROJECT_ROOT}\AJ_Logo.PNG</file>
     </fileset.depfun>
     <fileset.resources />
     <fileset.package />
     <build-deliverables>
-      <file location="C:\Users\pablo\OneDrive - Universidad Politécnica de Madrid\Documentos UPM\MUAR\Semestre 1b\Visión por Computador\Trabajo" name="VisionComputador" optional="false">C:\Users\pablo\OneDrive - Universidad Politécnica de Madrid\Documentos UPM\MUAR\Semestre 1b\Visión por Computador\Trabajo\VisionComputador</file>
+      <file location="C:\Users\pablo\Desktop\ETSII\Vision" name="VisionComputador" optional="false">C:\Users\pablo\Desktop\ETSII\Vision\VisionComputador</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>C:\Program Files\MATLAB\R2021b</root>
-      <toolboxes>
-        <toolbox name="matlabcoder" />
-        <toolbox name="gpucoder" />
-        <toolbox name="fixedpoint" />
-        <toolbox name="neuralnetwork" />
-      </toolboxes>
-      <toolbox>
-        <matlabcoder>
-          <enabled>true</enabled>
-        </matlabcoder>
-      </toolbox>
-      <toolbox>
-        <gpucoder>
-          <enabled>true</enabled>
-        </gpucoder>
-      </toolbox>
-      <toolbox>
-        <fixedpoint>
-          <enabled>true</enabled>
-        </fixedpoint>
-      </toolbox>
-      <toolbox>
-        <neuralnetwork>
-          <enabled>true</enabled>
-        </neuralnetwork>
-      </toolbox>
+      <root>C:\Program Files\MATLAB\R2022b</root>
+      <toolboxes />
     </matlab>
     <platform>
       <unix>false</unix>

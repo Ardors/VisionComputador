@@ -14,8 +14,6 @@ imgClean = imclose(imgClean,se);
 
 caract = regionprops(imgClean, 'all');
 
-
-
 bbox = vertcat(caract.BoundingBox);
 centroids = vertcat(caract.Centroid);
 
