@@ -1,28 +1,40 @@
-function [bbox, centroids] = get_apples(imgOri)
+function [bbox, centroids] = get_apples(img)
+% get_apples Returns bounding boxes and centroids of apples in the image
+%   [bbox, centroids] = get_apples(img) returns the bounding boxes of the N
+%   detected apples in an Nx4 matrix bbox, and the centorids in an Nx2 matrix
+%   centroids, of the full coluor RGB image img. Also, an image is plotted
 
-r = imgOri(:,:,1);
-g = imgOri(:,:,2);
-b = imgOri(:,:,3);
+% extract colours
+r = img(:,:,1);
+g = img(:,:,2);
+b = img(:,:,3);
 
+% Drg (uint8)
 Drg = uint8(uint16(r-g)*256./uint16(r+g+b));
 
-Drg_bin = imbinarize(Drg,100/256);
+% thresholding via Otsu's method - binary image
+binImg = imbinarize(Drg);
 
-se = strel('diamond',3);
-imgClean = imopen(Drg_bin,se);
-imgClean = imclose(imgClean,se);
+% structuring element diamond 3
+se = strel('diamond',2);
 
-caract = regionprops(imgClean, 'all');
+% opening, closing, and filling
+imgClean = imclose(binImg,se);
+imgClean = imopen(imgClean,se);
+imgClean = imfill(imgClean);
 
+% characteristic
+charact = regionprops(imgClean, 'all');
 
+% boundig boxes and centroids
+bbox = vertcat(charact.BoundingBox);
+centroids = vertcat(charact.Centroid);
 
-bbox = vertcat(caract.BoundingBox);
-centroids = vertcat(caract.Centroid);
-
+% plot figure with boundign boxes
 figure(111)
-imshow(imgOri);
+imshow(img);
 
-for i = 1:length(caract)
+for i = 1:length(charact)
     rectangle('Position', bbox(i, :), 'LineWidth', 2, 'EdgeColor', 'r')
 end
 

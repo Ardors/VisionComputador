@@ -1,0 +1,36 @@
+function [bbox, centroids] = get_apples(img)
+% get_apples Returns bounding boxes and centroids of apples in the image
+% [bbox, centroids] = get_apples(img) returns the bounding boxes of the N
+% detected apples in an Nx4 matrix bbox, and the centorids in an Nx2 matrix
+% centroids, of the full coluor RGB image img.
+
+% extract colours
+r = img(:,:,1);
+g = img(:,:,2);
+b = img(:,:,3);
+
+% Drg (uint8)
+Drg = uint8(uint16(r-g)*256./uint16(r+g+b));
+
+% Thresholding via Otsu's method
+Drg_bin = imbinarize(Drg);
+
+se = strel('diamond',3);
+imgClean = imopen(Drg_bin,se);
+imgClean = imclose(imgClean,se);
+
+caract = regionprops(imgClean, 'all');
+
+
+
+bbox = vertcat(caract.BoundingBox);
+centroids = vertcat(caract.Centroid);
+
+figure(111)
+imshow(img);
+
+for i = 1:length(caract)
+    rectangle('Position', bbox(i, :), 'LineWidth', 2, 'EdgeColor', 'r')
+end
+
+end
