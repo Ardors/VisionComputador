@@ -37,14 +37,14 @@ g0 = cast(g,"single")./(cast(r,"single")+cast(g,"single")+cast(b,"single"));
 b0 = cast(b,"single")./(cast(r,"single")+cast(g,"single")+cast(b,"single"));
 
 Drg = r0-g0;
-Drb = r0-b0;
+Drb = r0-b0;pixel distribution 
 
 alpha = 0.15;
 beta = 0.25;
 
 figure(3)
 scatter(Drb,Drg);
-title('Distribución de píxeles en Drb/Drg');
+% title('Distribución de píxeles en Drb/Drg');
 xlabel('Drb') 
 ylabel('Drg')
 

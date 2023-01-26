@@ -19,4 +19,11 @@ caract = regionprops(imgClean, 'all');
 bbox = vertcat(caract.BoundingBox);
 centroids = vertcat(caract.Centroid);
 
+figure(111)
+imshow(imgOri);
+
+for i = 1:length(caract)
+    rectangle('Position', bbox(i, :), 'LineWidth', 2, 'EdgeColor', 'r')
+end
+
 end
