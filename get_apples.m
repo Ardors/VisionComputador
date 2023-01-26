@@ -21,7 +21,7 @@ se = strel('diamond',2);
 % opening, closing, and filling
 imgClean = imclose(binImg,se);
 imgClean = imopen(imgClean,se);
-imgClean = imfill(imgClean);
+imgClean = imfill(imgClean, 'holes');
 
 % characteristic
 charact = regionprops(imgClean, 'all');
